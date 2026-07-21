@@ -1,0 +1,78 @@
+Title: Sparse Windowed Attention for Efficient Long-Context Summarization
+
+Authors: R. Menon, T. Okafor, S. Lindqvist
+Venue: Workshop on Efficient NLP Systems, 2025
+
+Abstract
+Transformer-based summarization models scale quadratically with input length,
+making them expensive to run on long documents such as research papers or
+legal contracts. We introduce Sparse Windowed Attention (SWA), an attention
+variant that restricts each token to attend only to a local window plus a
+small set of learned "anchor" tokens that summarize distant context. On a
+held-out set of 1,200 long-form documents, SWA reduces attention FLOPs by
+71% relative to full self-attention while retaining 96% of ROUGE-L score
+compared to a full-attention baseline of equal parameter count. We further
+show that SWA's anchor tokens can be visualized to reveal which passages the
+model treats as globally important, providing a useful interpretability
+signal that dense attention does not offer.
+
+1. Introduction
+Long documents are common in scientific, legal, and enterprise settings, yet
+most transformer summarizers are trained and evaluated on inputs under 1,024
+tokens due to the quadratic cost of self-attention. Prior long-context
+approaches (Longformer, BigBird) use fixed sparsity patterns but discard the
+ability to dynamically decide which distant tokens matter for a given
+document. We propose SWA to address this gap.
+
+2. Method
+SWA combines two attention pathways per layer: (a) a local sliding window of
+size w=256 tokens, and (b) attention to a small set of k=32 learned anchor
+tokens, updated via a lightweight pooling network that compresses each
+1,024-token block into a single anchor vector. This keeps attention cost
+linear in sequence length while allowing information to flow across the full
+document through the anchor pathway. We initialize SWA from a pretrained
+encoder-decoder checkpoint and fine-tune on document-summary pairs.
+
+3. Experiments
+We evaluate on three long-document summarization benchmarks (arXiv papers,
+GovReport, and PubMed) against a full-attention baseline and two sparse
+baselines (Longformer, BigBird) of matched parameter count. We measure
+ROUGE-1/2/L, training throughput (tokens/sec), and peak memory usage.
+
+4. Results
+SWA matches full attention within 1-4 ROUGE-L points across all three
+benchmarks while using 71% fewer attention FLOPs and 2.3x higher training
+throughput. Compared to Longformer and BigBird at equal sparsity budget, SWA
+improves ROUGE-L by 2.1 and 3.4 points respectively, which we attribute to
+the learned (rather than fixed) anchor mechanism. Ablations show that
+removing the anchor pathway entirely (local window only) drops ROUGE-L by
+8.7 points, confirming that global context access is necessary for
+document-level coherence.
+
+5. Related Work
+Longformer (Beltagy et al., 2020) introduced a mix of local windowed
+attention and fixed global tokens. BigBird (Zaheer et al., 2020) combined
+windowed, global, and random attention to approximate full attention while
+retaining theoretical expressiveness guarantees. Reformer (Kitaev et al.,
+2020) used locality-sensitive hashing to approximate attention. Our anchor
+pooling mechanism is related to Perceiver's (Jaegle et al., 2021) latent
+bottleneck but is applied per-block rather than globally, which we show
+preserves more fine-grained positional signal for summarization.
+
+6. Conclusion
+SWA offers a practical middle ground between full and fixed-sparsity
+attention for long-document summarization, with learned anchors providing
+both efficiency gains and a lightweight interpretability signal. Future work
+includes extending SWA to multi-document summarization and exploring
+adaptive window sizes per layer.
+
+References
+[1] Beltagy, I., Peters, M. E., & Cohan, A. (2020). Longformer: The
+    Long-Document Transformer. arXiv:2004.05150.
+[2] Zaheer, M., et al. (2020). Big Bird: Transformers for Longer Sequences.
+    NeurIPS 2020.
+[3] Kitaev, N., Kaiser, L., & Levskaya, A. (2020). Reformer: The Efficient
+    Transformer. ICLR 2020.
+[4] Jaegle, A., et al. (2021). Perceiver: General Perception with Iterative
+    Attention. ICML 2021.
+[5] Vaswani, A., et al. (2017). Attention Is All You Need. NeurIPS 2017.
