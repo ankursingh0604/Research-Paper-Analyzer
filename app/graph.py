@@ -16,7 +16,7 @@ architecture diagram:
                                                                                         |
                                                                                      Output
 
-Design choices, worth noting in the video/README:
+Design choices:
   - Metadata extraction runs in parallel with the Paper Analyzer since it's
     independent (doesn't need the analysis to run).
   - Citation Extractor runs in parallel with Summary Generator (both only
