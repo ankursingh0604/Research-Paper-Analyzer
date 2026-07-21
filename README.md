@@ -12,7 +12,7 @@ Built with **LangGraph** (state-based multi-agent orchestration) and the **OpenA
 ## Demo
 
 - Video: `<add your Google Drive link here before submitting>`
-- Live UI (optional): `<add your deployed Streamlit/Railway link here if you deploy it>`
+- Live UI : `<https://research-paper-analyzer-ki3fxqpxorf6hqfm4i6xao.streamlit.app/>`
 
 ## Architecture
 
@@ -42,7 +42,7 @@ Metadata Agent    Paper Analyzer Agent
      Output: Complete Research Brief
 ```
 
-Mermaid version (renders directly on GitHub):
+Mermaid version :
 
 ```mermaid
 flowchart TD
@@ -139,7 +139,7 @@ python cli.py --text "$(cat sample_data/sample_paper.txt)"
 Writes the brief to `outputs/research_brief.md` and prints it to the terminal along with
 the full workflow trace (which agent ran, review scores, retries).
 
-### Streamlit UI (bonus)
+### Streamlit UI 
 
 ```bash
 streamlit run streamlit_app.py
@@ -148,7 +148,7 @@ streamlit run streamlit_app.py
 Upload a PDF, paste a URL, or paste raw text. Shows live progress per agent, review
 scores as they land, and the retry/iteration history, then lets you download the brief.
 
-### FastAPI (bonus)
+### FastAPI 
 
 ```bash
 uvicorn api:app --reload
