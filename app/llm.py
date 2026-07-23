@@ -33,7 +33,7 @@ T = TypeVar("T", bound=BaseModel)
 
 
 class LLMCallError(Exception):
-    """Raised when the LLM call fails permanently after retries, or returns unparseable output."""
+    """Raised when the LLM call fails permanently after retries, or returns unparseable output"""
 
 
 class RetriableAPIError(Exception):

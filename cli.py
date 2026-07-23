@@ -7,7 +7,7 @@ Usage:
     python cli.py --text "paste raw paper text here"
 
 Writes the generated research brief to outputs/research_brief.md and also
-prints it to stdout.
+prints it to stdout
 """
 from __future__ import annotations
 

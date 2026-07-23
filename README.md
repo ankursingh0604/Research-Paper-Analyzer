@@ -7,7 +7,7 @@ regeneration when quality is below threshold.
 
 Built with **LangGraph** (state-based multi-agent orchestration) and the **OpenAI API**
 (`gpt-4o-mini` by default) with structured JSON outputs via Pydantic schemas (native
-`response_format=<PydanticModel>` support, so there's no manual JSON-schema wrangling).
+`response_format=<PydanticModel>` support, so there's no manual JSON-schema wrangling)
 
 ## Demo
 
